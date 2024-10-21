@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File and Link Sharing</title>
+  <link rel="stylesheet" href="/styles.css"> <!-- Link to external CSS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery for AJAX -->
+</head>
+<body>
+  <div class="container">
+    <h1>📂 File and Link Sharing Platform</h1>
+
+    <!-- Notification -->
+    <div id="notification" class="hidden"></div>
+
+    <!-- File Upload Section -->
+    <section class="upload-section">
+      <h2>Upload Files</h2>
+      <form id="file-upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Upload</button>
+      </form>
+    </section>
+
+    <!-- Uploaded Files List -->
+    <section class="files-section">
+      <h2>Uploaded Files</h2>
+      <ul id="files-list">
+        <% files.forEach(file => { %>
+          <li>
+            <a href="/download/<%= file %>" class="file-link"><%= file %></a>
+            <button class="delete-button" data-filename="<%= file %>">🗑️ Delete</button>
+          </li>
+        <% }) %>
+      </ul>
+    </section>
+
+    <!-- Link Sharing Section -->
+    <section class="link-section">
+      <h2>Share Links</h2>
+      <form id="link-form" action="/add-link" method="POST">
+        <input type="url" name="link" placeholder="Enter URL" required>
+        <button type="submit">Add Link</button>
+      </form>
+    </section>
+
+    <!-- Shared Links List -->
+    <section class="links-section">
+      <h2>Shared Links</h2>
+      <ul id="links-list">
+        <% links.forEach(link => { %>
+          <li><a href="<%= link %>" target="_blank" class="link-item"><%= link %></a></li>
+        <% }) %>
+      </ul>
+    </section>
+  </div>
+
+  <script>
+    // Show notification for a few seconds
+    function showNotification(message, type = 'success') {
+      $('#notification').text(message).removeClass('hidden').addClass(type);
+      setTimeout(() => $('#notification').addClass('hidden'), 3000);
+    }
+
+    // Handle file upload with AJAX
+    $('#file-upload-form').on('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      $.ajax({
+        url: '/upload',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function() {
+          showNotification('File uploaded successfully!');
+          location.reload(); // Reload page to update the file list
+        },
+        error: function() {
+          showNotification('Error uploading file.', 'error');
+        }
+      });
+    });
+
+    // Handle link submission with AJAX
+    $('#link-form').on('submit', function(e) {
+      e.preventDefault();
+      const link = $(this).find('input[name="link"]').val();
+      $.post('/add-link', { link }, function() {
+        showNotification('Link added successfully!');
+        location.reload(); // Reload page to update the links list
+      }).fail(function() {
+        showNotification('Error adding link.', 'error');
+      });
+    });
+
+    // Handle file deletion with AJAX
+    $('.delete-button').on('click', function() {
+      const filename = $(this).data('filename');
+      $.get(`/delete/${filename}`, function() {
+        showNotification('File deleted successfully!');
+        location.reload(); // Reload page to update the file list
+      }).fail(function() {
+        showNotification('Error deleting file.', 'error');
+      });
+    });
+  </script>
+</body>
+</html>
