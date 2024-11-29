@@ -11,7 +11,6 @@
   <div class="container">
     <h1>📂 File and Link Sharing Platform</h1>
 
-    <!-- Notification -->
     <div id="notification" class="hidden"></div>
 
     <!-- File Upload Section -->
@@ -57,13 +56,11 @@
   </div>
 
   <script>
-    // Show notification for a few seconds
     function showNotification(message, type = 'success') {
       $('#notification').text(message).removeClass('hidden').addClass(type);
       setTimeout(() => $('#notification').addClass('hidden'), 3000);
     }
 
-    // Handle file upload with AJAX
     $('#file-upload-form').on('submit', function(e) {
       e.preventDefault();
       const formData = new FormData(this);
@@ -83,7 +80,6 @@
       });
     });
 
-    // Handle link submission with AJAX
     $('#link-form').on('submit', function(e) {
       e.preventDefault();
       const link = $(this).find('input[name="link"]').val();
@@ -95,7 +91,6 @@
       });
     });
 
-    // Handle file deletion with AJAX
     $('.delete-button').on('click', function() {
       const filename = $(this).data('filename');
       $.get(`/delete/${filename}`, function() {
