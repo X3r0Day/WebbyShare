@@ -75,7 +75,7 @@
         processData: false,
         success: function() {
           showNotification('File uploaded successfully!');
-          location.reload(); // Reload page to update the file list
+          location.reload();
         },
         error: function() {
           showNotification('Error uploading file.', 'error');
@@ -89,7 +89,7 @@
       const link = $(this).find('input[name="link"]').val();
       $.post('/add-link', { link }, function() {
         showNotification('Link added successfully!');
-        location.reload(); // Reload page to update the links list
+        location.reload();
       }).fail(function() {
         showNotification('Error adding link.', 'error');
       });
@@ -100,7 +100,7 @@
       const filename = $(this).data('filename');
       $.get(`/delete/${filename}`, function() {
         showNotification('File deleted successfully!');
-        location.reload(); // Reload page to update the file list
+        location.reload();
       }).fail(function() {
         showNotification('Error deleting file.', 'error');
       });
