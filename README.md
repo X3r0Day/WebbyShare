@@ -70,10 +70,6 @@ sudo ufw allow from 192.168.1.0/24 to any port 3000 proto tcp
 ```
 
 ---
----
----
----
----
 
 ### Accessing Web Interface
 
@@ -92,7 +88,4 @@ sudo ufw allow from 192.168.1.0/24 to any port 3000 proto tcp
 #### 5. **Share Across Devices**:
    Access the web interface from other devices on the same network suing the local IP and Port of the machine hosting the local server
 
----
----
----
 ---
