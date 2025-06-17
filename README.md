@@ -56,10 +56,10 @@ The server will run at http://localhost:3000. If you’re on the same network, t
 - Open `CMD` as **Administrator** and run
  
 ```
-netsh advfirewall firewall add rule name="Allow Port 3000 from Local Network" dir=in action=allow protocol=TCP localport=3000 remoteip=192.168.1.0/24
+netsh advfirewall firewall add rule name="Allow Port 3000" dir=in action=allow protocol=TCP localport=3000 remoteip=192.168.1.0/24
 ```
 
-- This command creates a rule named "Allow Port 3000 from Local Network" that allows incoming TCP connections on port 3000 only from IP addresses within the 192.168.1.0/24 subnet. (i.e Local IP Addresses only)
+- This command creates a rule named "Allow Port 3000" that allows incoming TCP connections on port 3000 only from IP addresses within the 192.168.1.0/24 subnet. (i.e Local IP Addresses only)
 
 #### Linux:
 
